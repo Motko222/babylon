@@ -1,5 +1,7 @@
 #!bin/bash
 
+source ~/scripts/babylon/config/env
+
 babylond tx checkpointing create-validator \
 --amount 1000000ubbn \
 --pubkey $(babylond tendermint show-validator) \
