@@ -4,10 +4,11 @@ if [ -f ~/scripts/babylon/config/env ]
  then
    echo "Config file found."
  else
-  read -p "Wallet name? " WALLET
-  read -p "Moniker name? " MONIKER
-  echo "WALLET="$WALLET >> ~/scripts/babylon/config/env
-  echo "MONIKER="$MONIKER > ~/scripts/babylon/config/env
+   read -p "Wallet name? " WALLET
+   read -p "Moniker name? " MONIKER
+   echo "WALLET="$WALLET >> ~/scripts/babylon/config/env
+   echo "MONIKER="$MONIKER > ~/scripts/babylon/config/env
+   echo "Config file created."
 fi
 
 # UPDATE SYSTEM AND INSTALL BUILD TOOLS
