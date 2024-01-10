@@ -2,8 +2,6 @@
 
 source ~/scripts/babylon/config/env
 
-awk -F “text” '{print $NF}'
-
 json=$(curl -s localhost:16457/status | jq .result.sync_info)
 
 now=$(date +'%y-%m-%d %H:%M')
