@@ -9,7 +9,7 @@ do
    id=$(echo $line | awk '{print $2}')
    wallet=$(echo $line | awk '{print $1}')
    balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' )
-   valoper=$(babylond keys show $WALLET --bech val)
+   valoper=$(babylond keys show $WALLET --bech val | grep valoper | awk '{print $3}')
 
   if [[ $balance -gt 1010000 ]]
      then
