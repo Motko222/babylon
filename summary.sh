@@ -13,7 +13,7 @@ do
    id=$(echo $line | awk '{print $2}')
    wallet=$(echo $line | awk '{print $1}')
    balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1/1000000}')
-   valoper=$(babylond keys show $WALLET --bech val
+   valoper=$(babylond keys show $WALLET --bech val)
    
    stake=$(babylond query staking delegation $wallet $valoper 2>/dev/null | grep amount | \
       awk '{print $2}' | sed 's/"//g' | awk '{print $1/1000000}' )
