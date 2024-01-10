@@ -12,7 +12,7 @@ logsize=$(du -hs ~/logs/babylon.log | awk '{print $1}')
 latestBlock=$(echo $json | jq .latest_block_height)
 catchingUp=$(echo $json | jq .catching_up)
 
-if catchingUp
+if [ catchingUp ]
  then 
   status="warning"
   note="height=$latestBlock"
@@ -38,3 +38,4 @@ echo "log=$logsize"
 echo "id=$MONIKER" 
 echo "wallet=$WALLET"
 echo "catchingUp=$catchingUp"
+echo "height=$latestBlock"
