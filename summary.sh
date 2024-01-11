@@ -6,9 +6,9 @@ echo   "---- SUMMARY -----------------------------------------------------------
 printf "%-12s %9s %9s\n" Id Balance Stake
 echo   "---------------------------------------------------------------------------------------"
 
-babylond keys list | grep -E 'name|address' | sed 's/- address: //g' | sed 's/  name: //g' | paste - - | grep -v master >~/scripts/local/config/keys
+babylond keys list | grep -E 'name|address' | sed 's/- address: //g' | sed 's/  name: //g' | paste - - | grep -v master >~/scripts/babylon/config/keys
 
-cat ~/scripts/local/config/keys | while read line
+cat ~/scripts/babylon/config/keys | while read line
 do
    id=$(echo $line | awk '{print $2}')
    wallet=$(echo $line | awk '{print $1}')
