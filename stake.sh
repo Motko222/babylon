@@ -23,4 +23,3 @@ do
   fi
   
 done
-echo "Staking ended: "$(date +'%y-%m-%d %H:%M') #>>~/logs/bbn-stake.txt
