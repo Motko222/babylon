@@ -14,7 +14,7 @@ do
    wallet=$(echo $line | awk '{print $1}')
    balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1/1000000}')
    valoper=$(babylond keys show $WALLET --bech val | grep valoper | awk '{print $3}')
-   rewards=$(babylond query distribution rewards $wallet $valoper | cut -d . -f 1 | awk '{print $1/1000000}')
+   rewards=$(babylond query distribution rewards $wallet $valoper 2>/dev/null | awk '{print $1/1000000}')
    
    stake=$(babylond query staking delegation $wallet $valoper 2>/dev/null | grep amount | \
       awk '{print $2}' | sed 's/"//g' | awk '{print $1/1000000}' )
