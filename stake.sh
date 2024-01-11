@@ -14,11 +14,10 @@ do
   if [[ $balance -gt 1010000 ]]
      then
        toStake=${balance::-6}000000ubbn
-       echo $id staked $toStake 
+       delay=$(( $RANDOM % 300 + 1 ))s
+       echo $id staked $toStake, waiting $delay
        babylond tx epoching delegate $valoper $toStake --from $wallet \
           --chain-id bbn-test-2 --gas-prices 0.1ubbn --gas-adjustment 1.5 --gas auto -y >/dev/null 2>&1
-       delay=$(( $RANDOM % 300 + 1 ))s
-       echo "Waiting $delay" 
        sleep $delay
 #     else
 #      echo "$id did not stake, balance is $balance"
