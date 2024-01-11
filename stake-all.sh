@@ -14,7 +14,7 @@ do
      then
        toStake=${balance::-6}000000ubbn
        delay=$(( $RANDOM % 1800 ))s
-       echo "$id staked $toStake, waiting for next wallet $delay"
+       echo "$(date +'%y-%m-%d %H:%M') $id staked $toStake"
        babylond tx epoching delegate $valoper $toStake --from $wallet \
           --chain-id bbn-test-2 --gas-prices 0.1ubbn --gas-adjustment 1.5 --gas auto -y >/dev/null 2>&1
        sleep $delay
