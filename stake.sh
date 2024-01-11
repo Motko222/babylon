@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Staking started: "$(date +'%y-%m-%d %H:%M') >>~/logs/bbn-stake.txt
+echo "Staking started: "$(date +'%y-%m-%d %H:%M')
 source ~/scripts/babylon/config/env
 
 babylond keys list | grep -E 'name|address' | sed 's/- address: //g' | sed 's/  name: //g' | paste - - | grep -v master >~/scripts/babylon/config/keys
@@ -14,15 +14,15 @@ do
   if [[ $balance -gt 1010000 ]]
      then
        toStake=${balance::-6}000000ubbn
-       echo $id staked $toStake >>~/logs/bbn-stake.txt
+       echo $id staked $toStake 
        babylond tx epoching delegate $valoper $toStake --from $wallet \
           --chain-id bbn-test-2 --gas-prices 0.1ubbn --gas-adjustment 1.5 --gas auto -y >/dev/null 2>&1
        delay=$(( $RANDOM % 300 + 1 ))s
-       echo "Waiting $delay" >>~/logs/bbn-stake.txt
+       echo "Waiting $delay" 
        sleep $delay
 #     else
 #      echo "$id did not stake, balance is $balance"
   fi
   
 done
-echo "Staking ended: "$(date +'%y-%m-%d %H:%M') >>~/logs/bbn-stake.txt
+echo "Staking ended: "$(date +'%y-%m-%d %H:%M') #>>~/logs/bbn-stake.txt
