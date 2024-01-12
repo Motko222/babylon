@@ -6,7 +6,7 @@ json=$(curl -s localhost:16457/status | jq .result.sync_info)
 
 now=$(date +'%y-%m-%d %H:%M')
 pid=$(pgrep babylond)
-ver=$(cat ~/logs/babylon.log | grep "ABCI Handshake App Info" | awk -F "software-version=" '{print $NF}')
+ver=$(babylond version)
 foldersize1=$(du -hs ~/.babylond | awk '{print $1}')
 foldersize2=$(du -hs ~/babylon | awk '{print $1}')
 #logsize=$(du -hs ~/logs/babylon.log | awk '{print $1}')
