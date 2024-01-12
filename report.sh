@@ -17,14 +17,16 @@ delegated=$(babylond query staking delegations-to $VALOPER -o json \
   | jq .delegation_responses[].balance.amount | sed 's/"//g' | awk '{sum+=$1/1000000} END {print sum}')
 delegators=$(babylond query staking delegations-to $VALOPER -o json \
   | jq .delegation_responses[].balance.amount | sed 's/"//g' | wc -l )
-  
+jailed=$(babylond query staking validator $VALOPER -o json | jq .jailed)
+tokens=$(babylond query staking validator $VALOPER -o json | jq .tokens | sed 's/"//g' | awk '{print $1/1000000}')
+
 if $catchingUp
  then 
   status="warning"
   note="height=$latestBlock"
  else 
   status="ok"
-  note="$delegators delegators, $delegated bbn"
+  note="$delegators delegators, $tokens bbn"
 fi
 
 if [ -z $pid ];
@@ -45,7 +47,8 @@ echo "folder2=$foldersize2"
 echo "id=$MONIKER" 
 echo "wallet=$WALLET"
 echo "catchingUp=$catchingUp"
+echo "jailed=$jailed"
 echo "height=$latestBlock"
 echo "votingPower=$votingPower"
-echo "delegated=$delegated"
+echo "tokens=$tokens"
 echo "delegators=$delegators"
