@@ -13,9 +13,9 @@ logsize=$(du -hs ~/logs/babylon.log | awk '{print $1}')
 latestBlock=$(echo $json | jq .latest_block_height | sed 's/"//g' )
 catchingUp=$(echo $json | jq .catching_up)
 votingPower=$(babylond status 2>&1 | jq .ValidatorInfo.VotingPower | sed 's/"//g')
-delegated=$(babylond query staking delegations-to bbnvaloper10xyvgsr7jc85dyf5qzdca6xg2lu04p8rrehkds -o json \
+delegated=$(babylond query staking delegations-to $VALOPER -o json \
   | jq .delegation_responses[].balance.amount | sed 's/"//g' | awk '{sum+=$1/1000000} END {print sum}')
-delegators=$(babylond query staking delegations-to bbnvaloper10xyvgsr7jc85dyf5qzdca6xg2lu04p8rrehkds -o json \
+delegators=$(babylond query staking delegations-to $VALOPER -o json \
   | jq .delegation_responses[].balance.amount | sed 's/"//g' | wc -l )
   
 if $catchingUp
