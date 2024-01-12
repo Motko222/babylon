@@ -13,8 +13,6 @@ foldersize2=$(du -hs ~/babylon | awk '{print $1}')
 latestBlock=$(echo $json | jq .latest_block_height | sed 's/"//g' )
 catchingUp=$(echo $json | jq .catching_up)
 votingPower=$(babylond status 2>&1 | jq .ValidatorInfo.VotingPower | sed 's/"//g')
-delegated=$(babylond query staking delegations-to $VALOPER -o json \
-  | jq .delegation_responses[].balance.amount | sed 's/"//g' | awk '{sum+=$1/1000000} END {print sum}')
 delegators=$(babylond query staking delegations-to $VALOPER -o json \
   | jq .delegation_responses[].balance.amount | sed 's/"//g' | wc -l )
 jailed=$(babylond query staking validator $VALOPER -o json | jq .jailed)
