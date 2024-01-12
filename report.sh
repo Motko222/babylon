@@ -15,14 +15,16 @@ catchingUp=$(echo $json | jq .catching_up)
 votingPower=$(babylond status 2>&1 | jq .ValidatorInfo.VotingPower | sed 's/"//g')
 delegated=$(babylond query staking delegations-to bbnvaloper10xyvgsr7jc85dyf5qzdca6xg2lu04p8rrehkds -o json \
   | jq .delegation_responses[].balance.amount | sed 's/"//g' | awk '{sum+=$1/1000000} END {print sum}')
-
+delegators=$(babylond query staking delegations-to bbnvaloper10xyvgsr7jc85dyf5qzdca6xg2lu04p8rrehkds -o json \
+  | jq .delegation_responses[].balance.amount | sed 's/"//g' | | wc -l )
+  
 if $catchingUp
  then 
   status="warning"
   note="height=$latestBlock"
  else 
   status="ok"
-  note="vp=$votingPower"
+  note="$delegators delegators, $delegated bbn"
 fi
 
 if [ -z $pid ];
@@ -46,3 +48,4 @@ echo "catchingUp=$catchingUp"
 echo "height=$latestBlock"
 echo "votingPower=$votingPower"
 echo "delegated=$delegated"
+echo "delegators=$delegated"
