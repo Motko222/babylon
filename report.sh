@@ -7,16 +7,16 @@ json=$(curl -s localhost:16457/status | jq .result.sync_info)
 now=$(date +'%y-%m-%d %H:%M')
 pid=$(pgrep babylond)
 ver=$(babylond version)
+network=$(babylond status | jq -r .NodeInfo.network)
 foldersize1=$(du -hs ~/.babylond | awk '{print $1}')
 foldersize2=$(du -hs ~/babylon | awk '{print $1}')
 #logsize=$(du -hs ~/logs/babylon.log | awk '{print $1}')
-latestBlock=$(echo $json | jq .latest_block_height | sed 's/"//g' )
-catchingUp=$(echo $json | jq .catching_up)
-votingPower=$(babylond status 2>&1 | jq .ValidatorInfo.VotingPower | sed 's/"//g')
-delegators=$(babylond query staking delegations-to $VALOPER -o json \
-  | jq .delegation_responses[].balance.amount | sed 's/"//g' | wc -l )
-jailed=$(babylond query staking validator $VALOPER -o json | jq .jailed)
-tokens=$(babylond query staking validator $VALOPER -o json | jq .tokens | sed 's/"//g' | awk '{print $1/1000000}')
+latestBlock=$(echo $json | jq -r .latest_block_height)
+catchingUp=$(echo $json | jq -r .catching_up)
+votingPower=$(babylond status 2>&1 | jq -r .ValidatorInfo.VotingPower)
+delegators=$(babylond query staking delegations-to $VALOPER -o json | jq '.delegation_responses | length')
+jailed=$(babylond query staking validator $VALOPER -o json | jq -r .jailed)
+tokens=$(babylond query staking validator $VALOPER -o json | jq -r .tokens | awk '{print $1/1000000}')
 
 if $catchingUp
  then 
