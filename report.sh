@@ -12,7 +12,7 @@ foldersize2=$(du -hs ~/babylon | awk '{print $1}')
 logsize=$(du -hs ~/logs/babylon.log | awk '{print $1}')
 latestBlock=$(echo $json | jq .latest_block_height | sed 's/"//g' )
 catchingUp=$(echo $json | jq .catching_up)
-votingPower=$(babylond status 2>&1 | jq .ValidatorInfo.VotingPower) | sed 's/"//g"
+votingPower=$(babylond status 2>&1 | jq .ValidatorInfo.VotingPower | sed 's/"//g')
 
 if $catchingUp
  then 
