@@ -16,7 +16,7 @@ votingPower=$(babylond status 2>&1 | jq .ValidatorInfo.VotingPower | sed 's/"//g
 delegated=$(babylond query staking delegations-to bbnvaloper10xyvgsr7jc85dyf5qzdca6xg2lu04p8rrehkds -o json \
   | jq .delegation_responses[].balance.amount | sed 's/"//g' | awk '{sum+=$1/1000000} END {print sum}')
 delegators=$(babylond query staking delegations-to bbnvaloper10xyvgsr7jc85dyf5qzdca6xg2lu04p8rrehkds -o json \
-  | jq .delegation_responses[].balance.amount | sed 's/"//g' | | wc -l )
+  | jq .delegation_responses[].balance.amount | sed 's/"//g' | wc -l )
   
 if $catchingUp
  then 
