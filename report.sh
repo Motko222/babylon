@@ -20,6 +20,7 @@ if $catchingUp
   note="height=$latestBlock"
  else 
   status="ok"
+  note="vp=$votingPower"
 fi
 
 if [ -z $pid ];
