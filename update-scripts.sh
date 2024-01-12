@@ -1,4 +1,4 @@
-$!/bin/bash
+#!/bin/bash
 
 cd ~/scripts/babylon
 git stash push --include-untracked
