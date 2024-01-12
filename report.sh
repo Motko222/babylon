@@ -8,6 +8,7 @@ now=$(date +'%y-%m-%d %H:%M')
 pid=$(pgrep babylond)
 ver=$(babylond version)
 network=$(babylond status | jq -r .NodeInfo.network)
+type="validator"
 foldersize1=$(du -hs ~/.babylond | awk '{print $1}')
 foldersize2=$(du -hs ~/babylon | awk '{print $1}')
 #logsize=$(du -hs ~/logs/babylon.log | awk '{print $1}')
