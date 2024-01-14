@@ -6,14 +6,14 @@ if [ -z $1 ]
 then
  read -p "From wallet ? " from
 else
- wallet=$1
+ from=$1
 fi
 
 if [ -z $2 ]
 then
  read -p "To wallet ? " to
 else
- valoper=$2
+ to=$2
 fi
 
 if [ -z $3 ]
