@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sudo systemctl start babylon.service
+sudo systemctl restart babylon.service
 sudo journalctl -u babylon.service -f --no-hostname -o cat
 
