@@ -18,6 +18,8 @@ votingPower=$(babylond status 2>&1 | jq -r .ValidatorInfo.VotingPower)
 delegators=$(babylond query staking delegations-to $VALOPER -o json | jq '.delegation_responses | length')
 jailed=$(babylond query staking validator $VALOPER -o json | jq -r .jailed)
 tokens=$(babylond query staking validator $VALOPER -o json | jq -r .tokens | awk '{print $1/1000000}')
+wallet=$(babylond keys show $WALLET -a)
+balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' )
 
 if $catchingUp
  then 
@@ -25,7 +27,7 @@ if $catchingUp
   note="height=$latestBlock"
  else 
   status="ok"
-  note="$delegators delegators, $tokens bbn"
+  note="del $delegators | vp $tokens | bal $balance "
 fi
 
 if [ -z $pid ];
@@ -51,3 +53,4 @@ echo "height=$latestBlock"
 echo "votingPower=$votingPower"
 echo "tokens=$tokens"
 echo "delegators=$delegators"
+echo "balance=$balance"
