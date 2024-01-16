@@ -23,7 +23,19 @@ else
  amount=$3
 fi
 
-amount=$(( $amount * 1000000 ))ubbn
+amount=$(echo $amount | awk '{print  $1 * 1000000}' )ubbn
 
 babylond tx bank send $from $to $amount \
    --gas-prices 0.1ubbn --gas-adjustment 1.5 --gas auto -y
+
+
+
+
+
+
+
+
+
+
+
+
