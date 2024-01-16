@@ -19,7 +19,7 @@ delegators=$(babylond query staking delegations-to $VALOPER -o json | jq '.deleg
 jailed=$(babylond query staking validator $VALOPER -o json | jq -r .jailed)
 tokens=$(babylond query staking validator $VALOPER -o json | jq -r .tokens | awk '{print $1/1000000}')
 wallet=$(babylond keys show $WALLET -a)
-balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' )
+balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1 / 1000000}' )
 
 if $catchingUp
  then 
