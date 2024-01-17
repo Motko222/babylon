@@ -27,7 +27,7 @@ if $catchingUp
   note="height=$latestBlock"
  else 
   status="ok"
-  note="del $delegators | vp $tokens | bal $balance| bls $bls"
+  note="del $delegators | vp $tokens | bal $balance| bls $(date -d $bls +'%y-%m-%d %H:%M')"
 fi
 
 if [ -z $pid ];
@@ -54,4 +54,4 @@ echo "votingPower=$votingPower"
 echo "tokens=$tokens"
 echo "delegators=$delegators"
 echo "balance=$balance"
-echo "bls="$(date -d $bls +'%y-%m-%d %H:%M')
+echo "bls="$bls
