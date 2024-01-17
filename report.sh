@@ -20,6 +20,7 @@ jailed=$(babylond query staking validator $VALOPER -o json | jq -r .jailed)
 tokens=$(babylond query staking validator $VALOPER -o json | jq -r .tokens | awk '{print $1/1000000}')
 wallet=$(babylond keys show $WALLET -a)
 balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1 / 1000000}' )
+bls=$(babylond query txs --events 'message.action=/babylon.checkpointing.v1.MsgAddBlsSig&message.sender='$wallet -o json | jq -r .txs[-1].timestamp)
 
 if $catchingUp
  then 
@@ -27,7 +28,7 @@ if $catchingUp
   note="height=$latestBlock"
  else 
   status="ok"
-  note="del $delegators | vp $tokens | bal $balance "
+  note="del $delegators | vp $tokens | bal $balance| bls $bls"
 fi
 
 if [ -z $pid ];
@@ -54,3 +55,4 @@ echo "votingPower=$votingPower"
 echo "tokens=$tokens"
 echo "delegators=$delegators"
 echo "balance=$balance"
+echo "bls=$bls"
