@@ -4,7 +4,6 @@ source ~/scripts/babylon/config/env
 
 json=$(curl -s localhost:16457/status | jq .result.sync_info)
 
-now=$(date +'%y-%m-%d %H:%M')
 pid=$(pgrep babylond)
 ver=$(babylond version)
 network=$(babylond status | jq -r .NodeInfo.network)
@@ -36,7 +35,7 @@ then status="error";
  note="not running";
 fi
 
-echo "updated='$now'"
+echo "updated="$(date +'%y-%m-%d %H:%M')
 echo "version='$ver'"
 echo "process='$pid'"
 echo "status="$status
@@ -55,4 +54,4 @@ echo "votingPower=$votingPower"
 echo "tokens=$tokens"
 echo "delegators=$delegators"
 echo "balance=$balance"
-echo "bls=$bls"
+echo "bls="$($bls +'%y-%m-%d %H:%M')
