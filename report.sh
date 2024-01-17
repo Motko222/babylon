@@ -27,7 +27,7 @@ if $catchingUp
   note="height=$latestBlock"
  else 
   status="ok"
-  note="del $delegators | vp $tokens | bal $balance| bls $(date -d $bls +'%y-%m-%d %H:%M')"
+  note="del $delegators | vp $tokens | bal $balance | bls $(date -d $bls +'%y-%m-%d %H:%M')"
 fi
 
 if [ -z $pid ];
