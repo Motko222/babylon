@@ -54,4 +54,4 @@ echo "votingPower=$votingPower"
 echo "tokens=$tokens"
 echo "delegators=$delegators"
 echo "balance=$balance"
-echo "bls="$($bls +'%y-%m-%d %H:%M')
+echo "bls="$(date -d $bls +'%y-%m-%d %H:%M')
