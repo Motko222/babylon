@@ -30,6 +30,12 @@ if $catchingUp
   note="del $delegators | vp $tokens | bal $balance | bls $(date -d $bls +'%y-%m-%d %H:%M')"
 fi
 
+if $jailed
+ then
+  status="warning"
+  note="jailed"
+fi 
+
 if [ -z $pid ];
 then status="error";
  note="not running";
