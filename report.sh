@@ -41,7 +41,7 @@ then status="error";
  note="not running";
 fi
 
-echo "updated="$(date +'%y-%m-%d %H:%M')
+echo "updated='$(date +'%y-%m-%d %H:%M')'"
 echo "version='$ver'"
 echo "process='$pid'"
 echo "status="$status
