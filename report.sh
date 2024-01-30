@@ -30,7 +30,7 @@ if $catchingUp
   note="del $delegators | vp $tokens | bal $balance | bls $(date -d $bls +'%y-%m-%d %H:%M')"
 fi
 
-if $jailed
+if [ $jailed == true ]
  then
   status="warning"
   note="jailed"
