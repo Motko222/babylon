@@ -10,7 +10,8 @@ fi
 
 if [ -z $2 ]
 then
- read -p "To valoper ? " valoper
+ read -p "To valoper (blank to delegate to this valoper) ? " valoper
+ if [ -z $valoper ]; then valoper=$(babylond keys show $WALLET --bech val | head -1 | awk '{print $3}'); fi
 else
  valoper=$2
 fi
