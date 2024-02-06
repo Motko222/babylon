@@ -9,7 +9,7 @@ else
  key=$1
 fi
 
-
+echo "Balance: "$(babylond query bank balances $key -o json | jq -r .amount | awk '{print $1/1000000}')"bbn"
 
 if [ -z $2 ]
 then
