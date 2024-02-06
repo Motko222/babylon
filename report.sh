@@ -32,7 +32,7 @@ fi
 
 if [ $jailed == true ]
  then
-  status="warning"
+  status="error"
   note="jailed"
 fi 
 
