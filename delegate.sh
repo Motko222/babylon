@@ -10,7 +10,7 @@ else
 fi
 
 wallet=$(babylond keys show $key --output json | jq -r .address)
-balance=$(babylond query bank balances $key -o json | jq -r .amount | awk '{print $1/1000000}')"bbn"
+balance=$(babylond query bank balances $wallet -o json | jq -r .amount | awk '{print $1/1000000}')"bbn"
 echo "Balance: $balance bbn"
 
 if [ -z $2 ]
