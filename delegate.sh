@@ -3,22 +3,25 @@ source ~/scripts/babylon/config/env
 
 if [ -z $1 ]
 then
- read -p "From wallet ? " wallet
+ read -p "From key (default $KEY) ? " key
+ if [ -z $key ]; then key=$KEY; fi
 else
- wallet=$1
+ key=$1
 fi
+
+
 
 if [ -z $2 ]
 then
- read -p "To valoper (blank to delegate to this valoper) ? " valoper
- if [ -z $valoper ]; then valoper=$(babylond keys show $WALLET --bech val | head -1 | awk '{print $3}'); fi
+ read -p "To valoper (default $VALOPER) ? " valoper
+ if [ -z $valoper ]; then valoper=$VALOPER; fi
 else
  valoper=$2
 fi
 
 if [ -z $3 ]
 then
- read -p "Amount  ? " amount
+ read -p "Amount (pryzm)  ? " amount
 else
  amount=$3
 fi
