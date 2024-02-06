@@ -23,7 +23,7 @@ fi
 
 if [ -z $3 ]
 then
- read -p "Amount (pryzm)  ? " amount
+ read -p "Amount (bbn)  ? " amount
 else
  amount=$3
 fi
