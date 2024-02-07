@@ -17,8 +17,8 @@ votingPower=$(babylond status 2>&1 | jq -r .ValidatorInfo.VotingPower)
 delegators=$(babylond query staking delegations-to $VALOPER -o json | jq '.delegation_responses | length')
 jailed=$(babylond query staking validator $VALOPER -o json | jq -r .jailed)
 tokens=$(babylond query staking validator $VALOPER -o json | jq -r .tokens | awk '{print $1/1000000}')
-balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1 / 1000000}' )
-bls=$(babylond query txs --events 'message.action=/babylon.checkpointing.v1.MsgAddBlsSig&message.sender='$wallet -o json | jq -r .txs[-1].timestamp)
+balance=$(babylond query bank balances $WALLET | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1 / 1000000}' )
+bls=$(babylond query txs --events 'message.action=/babylon.checkpointing.v1.MsgAddBlsSig&message.sender='$WALLET -o json | jq -r .txs[-1].timestamp)
 active=$(babylond query tendermint-validator-set | grep -c $VALKEY)
 
 if $catchingUp
