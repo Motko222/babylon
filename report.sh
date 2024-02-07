@@ -19,7 +19,7 @@ jailed=$(babylond query staking validator $VALOPER -o json | jq -r .jailed)
 tokens=$(babylond query staking validator $VALOPER -o json | jq -r .tokens | awk '{print $1/1000000}')
 balance=$(babylond query bank balances $WALLET | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1 / 1000000}' )
 bls=$(babylond query txs --events 'message.action=/babylon.checkpointing.v1.MsgAddBlsSig&message.sender='$WALLET -o json | jq -r .txs[-1].timestamp)
-active=$(babylond query tendermint-validator-set | grep -c $VALKEY)
+active=$(babylond query tendermint-validator-set | grep -c $PUBKEY)
 
 if $catchingUp
  then 
@@ -27,7 +27,7 @@ if $catchingUp
   note="height=$latestBlock"
  else 
   status="ok"
-  note="del $delegators | vp $tokens | bal $balance | bls $(date -d $bls +'%y-%m-%d %H:%M')"
+  note="act $active | del $delegators | vp $tokens | bal $balance | bls $(date -d $bls +'%y-%m-%d %H:%M')"
 fi
 
 if [ $jailed == true ]
@@ -55,7 +55,7 @@ echo "id=$MONIKER"
 echo "key=$KEY"
 echo "wallet=$WALLET"
 echo "valoper=$VALOPER"
-echo "pubkey=$VALKEY"
+echo "pubkey=$PUBKEY"
 echo "catchingUp=$catchingUp"
 echo "active=$active"
 echo "jailed=$jailed"
