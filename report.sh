@@ -20,6 +20,7 @@ tokens=$(babylond query staking validator $VALOPER -o json | jq -r .tokens | awk
 wallet=$(babylond keys show $WALLET -a)
 balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1 / 1000000}' )
 bls=$(babylond query txs --events 'message.action=/babylon.checkpointing.v1.MsgAddBlsSig&message.sender='$wallet -o json | jq -r .txs[-1].timestamp)
+active=$(babylond query tendermint-validator-set | grep -c $VALKEY)
 
 if $catchingUp
  then 
@@ -54,6 +55,7 @@ echo "folder2=$foldersize2"
 echo "id=$MONIKER" 
 echo "wallet=$WALLET"
 echo "catchingUp=$catchingUp"
+echo "active=$active"
 echo "jailed=$jailed"
 echo "height=$latestBlock"
 echo "votingPower=$votingPower"
