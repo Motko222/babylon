@@ -20,6 +20,7 @@ tokens=$(babylond query staking validator $VALOPER -o json | jq -r .tokens | awk
 balance=$(babylond query bank balances $WALLET | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1 / 1000000}' )
 bls=$(babylond query txs --events 'message.action=/babylon.checkpointing.v1.MsgAddBlsSig&message.sender='$WALLET -o json | jq -r .txs[-1].timestamp)
 active=$(babylond query tendermint-validator-set | grep -c $PUBKEY)
+threshold=$(babylond query tendermint-validator-set -o json | jq -r .validators[].voting_power | tail -1)
 
 if $catchingUp
  then 
@@ -27,7 +28,7 @@ if $catchingUp
   note="height=$latestBlock"
  else 
   status="ok"
-  note="act $active | del $delegators | vp $tokens | bal $balance | bls $(date -d $bls +'%y-%m-%d %H:%M')"
+  note="act $active | del $delegators | vp $tokens | thr $threshold | bal $balance | bls $(date -d $bls +'%y-%m-%d %H:%M')"
 fi
 
 if [ $jailed == true ]
