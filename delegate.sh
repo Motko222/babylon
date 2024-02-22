@@ -15,8 +15,9 @@ echo "Balance: $balance bbn"
 
 if [ -z $2 ]
 then
- read -p "To valoper (default $VALOPER) ? " valoper
- if [ -z $valoper ]; then valoper=$VALOPER; fi
+ def_valoper=$(echo $PWD | $BINARY keys show $key -a --bech val)
+ read -p "To valoper (default $def_valoper) ? " valoper
+ if [ -z $valoper ]; then valoper=$def_valoper; fi
 else
  valoper=$2
 fi
@@ -30,5 +31,5 @@ fi
 
 amount=$(( $amount * 1000000 ))ubbn
 
-babylond tx epoching delegate $valoper $amount --from $wallet \
+echo $PSWD | $BINARY tx epoching delegate $valoper $amount --from $wallet \
  --chain-id $NETWORK --gas-prices 0.1ubbn --gas-adjustment 1.5 --gas auto -y | tail -1
