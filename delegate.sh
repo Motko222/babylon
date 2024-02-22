@@ -31,4 +31,4 @@ fi
 amount=$(( $amount * 1000000 ))ubbn
 
 babylond tx epoching delegate $valoper $amount --from $wallet \
- --chain-id bbn-test-2 --gas-prices 0.1ubbn --gas-adjustment 1.5 --gas auto -y
+ --chain-id bbn-test-2 --gas-prices 0.1ubbn --gas-adjustment 1.5 --gas auto -y | tail -1
