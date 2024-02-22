@@ -15,7 +15,7 @@ echo "Balance: $balance bbn"
 
 if [ -z $2 ]
 then
- def_valoper=$(echo $PSWD | $BINARY keys show $key -a --bech val)
+ def_valoper=$(echo $PSWD | $BINARY keys show $KEY -a --bech val)
  read -p "To valoper (default $def_valoper) ? " valoper
  if [ -z $valoper ]; then valoper=$def_valoper; fi
 else
