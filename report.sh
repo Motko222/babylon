@@ -17,11 +17,11 @@ votingPower=$(babylond status 2>&1 | jq -r .ValidatorInfo.VotingPower)
 wallet=$(echo $PSWD | babylond keys show $KEY -a)
 valoper=$(echo $PSWD | babylond keys show $KEY -a --bech val)
 pubkey=$(babylond tendermint show-validator --log_format json | jq -r .key)
-#delegators=$(babylond query staking delegations-to $valoper --chain-id $NETWORK -o json | jq '.delegation_responses | length')
-#jailed=$(babylond query staking validator $valoper --chain-id $NETWORK -o json | jq -r .jailed)
-#tokens=$(babylond query staking validator $valoper --chain-id $NETWORK -o json | jq -r .tokens | awk '{print $1/1000000}')
+delegators=$(babylond query staking delegations-to $valoper --chain-id $NETWORK -o json | jq '.delegation_responses | length')
+jailed=$(babylond query staking validator $valoper --chain-id $NETWORK -o json | jq -r .jailed)
+tokens=$(babylond query staking validator $valoper --chain-id $NETWORK -o json | jq -r .tokens | awk '{print $1/1000000}')
 balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1 / 1000000}' )
-#bls=$(babylond query txs --events 'message.action=/babylon.checkpointing.v1.MsgAddBlsSig&message.sender='$WALLET --chain-id $NETWORK -o json | jq -r .txs[-1].timestamp)
+bls=$(babylond query txs --events 'message.action=/babylon.checkpointing.v1.MsgAddBlsSig&message.sender='$WALLET --chain-id $NETWORK -o json | jq -r .txs[-1].timestamp)
 active=$(babylond query tendermint-validator-set --chain-id $NETWORK | grep -c $pubkey)
 threshold=$(babylond query tendermint-validator-set --chain-id $NETWORK -o json | jq -r .validators[].voting_power | tail -1)
 
@@ -50,7 +50,7 @@ echo "version='$ver'"
 echo "process='$pid'"
 echo "status="$status
 echo "note='$note'"
-echo "network='$network'"
+echo "network='$NETWORK'"
 echo "type="$type
 echo "folder1=$foldersize1"
 echo "folder2=$foldersize2"
