@@ -18,8 +18,8 @@ wallet=$(echo $PSWD | babylond keys show $KEY -a)
 valoper=$(echo $PSWD | babylond keys show $KEY -a --bech val)
 pubkey=$(babylond tendermint show-validator --log_format json | jq -r .key)
 delegators=$(babylond query staking delegations-to $valoper --chain-id $NETWORK -o json | jq '.delegation_responses | length')
-jailed=$(babylond query staking validator $valoper --chain-id $NETWORK -o json | jq -r .jailed)
-tokens=$(babylond query staking validator $valoper --chain-id $NETWORK -o json | jq -r .tokens | awk '{print $1/1000000}')
+val_status=$(babylond query staking validator $valoper --chain-id $NETWORK -o json | jq -r .validator.status)
+tokens=$(babylond query staking validator $valoper --chain-id $NETWORK -o json | jq -r .validator.tokens | awk '{print $1/1000000}')
 balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1 / 1000000}' )
 #bls=$(babylond query txs --events 'message.action=/babylon.checkpointing.v1.MsgAddBlsSig&message.sender='$WALLET --chain-id $NETWORK -o json | jq -r .txs[-1].timestamp)
 active=$(babylond query tendermint-validator-set --chain-id $NETWORK | grep -c $pubkey)
@@ -34,11 +34,11 @@ if $catchingUp
   note="act $active | del $delegators | vp $tokens | thr $threshold | bal $balance | bls $(date -d $bls +'%y-%m-%d %H:%M')"
 fi
 
-if [ $jailed == true ]
- then
-  status="error"
-  note="jailed"
-fi 
+#if [ $jailed == true ]
+# then
+#  status="error"
+#  note="jailed"
+#fi 
 
 if [ -z $pid ];
 then status="error";
@@ -70,3 +70,4 @@ echo "tokens=$tokens"
 echo "delegators=$delegators"
 echo "balance=$balance"
 echo "bls="$bls
+echo "val_status="$val_status
