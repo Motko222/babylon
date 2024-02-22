@@ -31,5 +31,5 @@ fi
 
 amount=$(( $amount * 1000000 ))ubbn
 
-echo $PSWD | $BINARY tx staking delegate $valoper $amount --from $wallet \
+echo $PSWD | $BINARY tx epoching delegate $valoper $amount --from $wallet \
  --chain-id $NETWORK --gas-prices 0.1ubbn --gas-adjustment 1.5 --gas auto -y | tail -1
