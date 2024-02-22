@@ -23,7 +23,7 @@ tokens=$(babylond query staking validator $valoper -o json | jq -r .tokens | awk
 balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' | sed 's/"//g' | awk '{print $1 / 1000000}' )
 bls=$(babylond query txs --events 'message.action=/babylon.checkpointing.v1.MsgAddBlsSig&message.sender='$WALLET -o json | jq -r .txs[-1].timestamp)
 active=$(babylond query tendermint-validator-set | grep -c $pubkey)
-threshold=$(babylond query tendermint-validator-set -o json | jq -r .validators[].voting_power | tail -1)
+threshold=$(babylond query tendermint-validator-set --chain-id $NETWORK -o json | jq -r .validators[].voting_power | tail -1)
 
 if $catchingUp
  then 
