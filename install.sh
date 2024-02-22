@@ -33,8 +33,6 @@ rm -rf babylon
 git clone https://github.com/babylonchain/babylon.git
 cd babylon
 git checkout v0.8.3
-
-# Build binaries
 make build
 
 # Prepare binaries for Cosmovisor
@@ -47,7 +45,6 @@ sudo ln -s $HOME/.babylond/cosmovisor/genesis $HOME/.babylond/cosmovisor/current
 sudo ln -s $HOME/.babylond/cosmovisor/current/bin/babylond /usr/local/bin/babylond -f
 
 # Install Cosmovisor and create a service
-# Download and install Cosmovisor
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@v1.5.0
 
 # Set node configuration
