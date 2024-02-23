@@ -1,3 +1,4 @@
 #!/bin/bash
 source ~/scripts/babylon/config/env
-babylond tx slashing unjail --from $KEY --chain-id $NETWORK --gas-prices 0.1ubbn --gas-adjustment 1.5 --gas auto -y
+echo $PSWD | $BINARY tx slashing unjail --from $KEY \
+  --chain-id $NETWORK --gas-prices $GAS_PRICE --gas-adjustment $GA_ADJ --gas $GAS -y
