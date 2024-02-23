@@ -2,20 +2,5 @@
 
 source ~/scripts/babylon/config/env
 
-babylond tx checkpointing create-validator \
---amount 1000000ubbn \
---pubkey $(babylond tendermint show-validator) \
---moniker $MONIKER \
---identity "ID" \
---details "DETAILS" \
---website "WEBSITE" \
---chain-id $NETWORK \
---commission-rate 0.05 \
---commission-max-rate 0.20 \
---commission-max-change-rate 0.01 \
---min-self-delegation 1 \
---from $KEY \
---gas-adjustment 1.4 \
---gas auto \
---fees 10ubbn \
--y
+babylond tx checkpointing create-validator /root/scripts/babylon/validator.json \
+--from $KEY --gas-adjustment 1.4 --gas auto --fees 10ubbn -y
