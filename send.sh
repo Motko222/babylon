@@ -4,9 +4,10 @@ source ~/scripts/babylon/config/env
 
 if [ -z $1 ]
 then
- read -p "From key ? " from
+ read -p "From key (default $KEY) ? " key
+ if [ -z $key ]; then key=$KEY; fi
 else
- from=$1
+ key=$1
 fi
 
 wallet=$(echo $PSWD | $BINARY keys show $key --output json | jq -r .address)
