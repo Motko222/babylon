@@ -23,7 +23,7 @@ balance=$(babylond query bank balances $wallet -o json | jq -r .balances[].amoun
 
 if [ -z $3 ]
 then
- read -p "Amount (mas $(( balance - 50000 ))ubbn)  ? " amount
+ read -p "Amount (max $(( balance - 50000 ))ubbn)  ? " amount
 else
  amount=$3
 fi
