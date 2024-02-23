@@ -30,7 +30,7 @@ fi
 
 amount=$(echo $amount | awk '{print  $1 * 1000000}' )ubbn
 
-echo $PSWD | babylond tx bank send $from $to $amount \
+echo $PSWD | babylond tx bank send $key $to $amount \
    --gas-prices 0.1ubbn --gas-adjustment 1.5 --gas auto -y
 
 
