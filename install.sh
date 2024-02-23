@@ -47,13 +47,15 @@ sudo ln -s $HOME/.babylond/cosmovisor/current/bin/babylond /usr/local/bin/babylo
 # Install Cosmovisor and create a service
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@v1.5.0
 
-# Set node configuration
-babylond config chain-id $NETWORK
-babylond config keyring-backend test
-babylond config node tcp://localhost:16457
+
 
 # Initialize the node
 babylond init $MONIKER --chain-id $NETWORK
+
+# Set node configuration
+sed -i -e 's/^chain-id =.*/chain-id = "bbn-test-3"/' $HOME/.babylond/config/client.toml
+sed -i -e 's/^keyring-backend =.*/keyring-backend = "test"/' $HOME/.babylond/config/client.toml
+sed -i -e 's/26657/17457/' $HOME/.babylond/config/client.toml
 
 # Download genesis and addrbook
 wget https://github.com/babylonchain/networks/raw/main/bbn-test-3/genesis.tar.bz2
@@ -91,8 +93,7 @@ lz4 -c -d babylon_$snapshot.tar.lz4  | tar -x -C $HOME/.babylond
 rm babylon_$snapshot.tar.lz4
 
 #create wallet and bls key
-echo $PSWD | babylond keys add $KEY --recover
-echo $PSWD | babylond create-bls-key $(babylond keys show $KEY -a)
+babylond keys add $KEY --recover
 
 #create service
 sudo tee /etc/systemd/system/babylon.service > /dev/null << EOF
