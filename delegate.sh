@@ -31,4 +31,4 @@ fi
 amount=$(( amount ))ubbn
 
 echo $PSWD | $BINARY tx epoching delegate $valoper $amount --from $wallet \
- --chain-id $NETWORK --gas 85000 --gas-adjustment 1.2 --gas-prices 0.025ubbn -y
+ --chain-id $NETWORK --gas $GAS --gas-adjustment $GAS_ADJ --gas-prices $GAS_PRICE -y
