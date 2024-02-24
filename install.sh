@@ -96,6 +96,7 @@ rm babylon_$snapshot.tar.lz4
 
 #create wallet and bls key
 babylond keys add $KEY --recover
+babylond create-bls-key $(babylond keys show $KEY -a)
 
 #create service
 sudo tee /etc/systemd/system/babylon.service > /dev/null << EOF
