@@ -11,6 +11,8 @@ if [ -f ~/scripts/babylon/config/env ]
    echo "Config file created."
 fi
 
+source ~/scripts/babylon/config/env
+
 # UPDATE SYSTEM AND INSTALL BUILD TOOLS
 sudo apt -q update
 sudo apt -qy install curl git jq lz4 build-essential
