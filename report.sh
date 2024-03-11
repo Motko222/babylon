@@ -88,6 +88,6 @@ then
   --header "Content-Type: text/plain; charset=utf-8" \
   --header "Accept: application/json" \
   --data-binary "
-    status,machine=$MACHINE,id=$id,moniker=$MONIKER status=\"$status\",message=\"$message\",version=\"$version\",url=\"$url\",chain=\"$chain\",votingPower=\"$votingPower\",threshold=\"$threshold\",active=\"$active\",jailed=\"$jailed\" $(date +%s%N) 
+    status,machine=$MACHINE,id=$id,moniker=$MONIKER status=\"$status\",message=\"$message\",version=\"$version\",url=\"$url\",chain=\"$chain\",tokens=\"$tokens\",threshold=\"$threshold\",active=\"$active\",jailed=\"$jailed\" $(date +%s%N) 
     "
 fi
