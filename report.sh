@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ~/scripts/babylon/config/env
+source ~/.bash_profile
 
 json=$(curl -s localhost:16457/status | jq .result.sync_info)
 
