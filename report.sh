@@ -6,7 +6,7 @@ json=$(curl -s localhost:16457/status | jq .result.sync_info)
 
 pid=$(pgrep babylond)
 ver=$(babylond version)
-network=$(babylond status | jq -r .NodeInfo.network)
+chain=$(babylond status | jq -r .NodeInfo.network)
 type="validator"
 foldersize1=$(du -hs ~/.babylond | awk '{print $1}')
 foldersize2=$(du -hs ~/babylon | awk '{print $1}')
@@ -24,14 +24,19 @@ balance=$(babylond query bank balances $wallet | grep amount | awk '{print $3}' 
 #bls=$(babylond query txs --events 'message.action=/babylon.checkpointing.v1.MsgAddBlsSig&message.sender='$WALLET --chain-id $NETWORK -o json | jq -r .txs[-1].timestamp)
 active=$(babylond query tendermint-validator-set --chain-id $NETWORK | grep -c $pubkey)
 threshold=$(babylond query tendermint-validator-set --chain-id $NETWORK -o json | jq -r .validators[].voting_power | tail -1)
+bucket=validator
+id=babylon-$BABYLON_ID
+
 
 if $catchingUp
  then 
-  status="warning"
+  status="syncing"
   note="height=$latestBlock"
  else 
-  status="ok"
-  note="act $active | del $delegators | vp $tokens | thr $threshold | bal $balance | bls $(date -d $bls +'%y-%m-%d %H:%M')"
+  if [ val_status -eq 3 ]; then status=active; fi
+  if [ val_status -eq 2 ]; then status=inactive; fi
+  if [ val_status -eq 1 ]; then status=jailed; fi
+ # note="act $active | del $delegators | vp $tokens | thr $threshold | bal $balance | bls $(date -d $bls +'%y-%m-%d %H:%M')"
 fi
 
 #if [ $jailed == true ]
@@ -41,8 +46,8 @@ fi
 #fi 
 
 if [ -z $pid ];
-then status="error";
- note="not running";
+then status="offline";
+ note="process not running";
 fi
 
 echo "updated='$(date +'%y-%m-%d %H:%M')'"
@@ -50,12 +55,12 @@ echo "version='$ver'"
 echo "process='$pid'"
 echo "status="$status
 echo "note='$note'"
-echo "network='$NETWORK'"
+echo "chain='$chain'"
 echo "type="$type
 echo "folder1=$foldersize1"
 echo "folder2=$foldersize2"
 #echo "log=$logsize" 
-echo "id=$MONIKER" 
+echo "moniker=$MONIKER" 
 echo "key=$KEY"
 echo "wallet=$wallet"
 echo "valoper=$valoper"
@@ -71,3 +76,16 @@ echo "delegators=$delegators"
 echo "balance=$balance"
 echo "bls="$bls
 echo "val_status="$val_status
+
+# send data to influxdb
+if [ ! -z $INFLUX_HOST ]
+then
+ curl --request POST \
+ "$INFLUX_HOST/api/v2/write?org=$INFLUX_ORG&bucket=$bucket&precision=ns" \
+  --header "Authorization: Token $INFLUX_TOKEN" \
+  --header "Content-Type: text/plain; charset=utf-8" \
+  --header "Accept: application/json" \
+  --data-binary "
+    status,machine=$MACHINE,id=$id,moniker=$MONIKER status=\"$status\",message=\"$message\",version=\"$version\",url=\"$url\",chain=\"$chain\",votingPower=\"$votingPower\",threshold=\"$threshold\",active=\"$active\",jailed=\"$jailed\" $(date +%s%N) 
+    "
+fi
