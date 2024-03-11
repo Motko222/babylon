@@ -33,9 +33,9 @@ if $catchingUp
   status="syncing"
   note="height=$latestBlock"
  else 
-  if [ val_status -eq 3 ]; then status=active; fi
-  if [ val_status -eq 2 ]; then status=inactive; fi
-  if [ val_status -eq 1 ]; then status=jailed; fi
+  if [ $val_status -eq 3 ]; then status=active; fi
+  if [ $val_status -eq 2 ]; then status=inactive; fi
+  if [ $val_status -eq 1 ]; then status=jailed; fi
  # note="act $active | del $delegators | vp $tokens | thr $threshold | bal $balance | bls $(date -d $bls +'%y-%m-%d %H:%M')"
 fi
 
@@ -60,6 +60,7 @@ echo "type="$type
 echo "folder1=$foldersize1"
 echo "folder2=$foldersize2"
 #echo "log=$logsize" 
+echo "id=$id"
 echo "moniker=$MONIKER" 
 echo "key=$KEY"
 echo "wallet=$wallet"
