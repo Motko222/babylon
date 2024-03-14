@@ -52,7 +52,7 @@ then status="offline";
 fi
 
 echo "updated='$(date +'%y-%m-%d %H:%M')'"
-echo "version='$ver'"
+echo "version='$version'"
 echo "process='$pid'"
 echo "status="$status
 echo "note='$note'"
