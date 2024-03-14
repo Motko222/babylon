@@ -6,8 +6,8 @@ source ~/.bash_profile
 json=$(curl -s localhost:16457/status | jq .result.sync_info)
 
 pid=$(pgrep babylond)
-ver=$(babylond version)
-chain=$(babylond status | jq -r .NodeInfo.network)
+version=$(babylond version)
+chain=$(babylond status | jq -r .node_info.network)
 type="validator"
 foldersize1=$(du -hs ~/.babylond | awk '{print $1}')
 foldersize2=$(du -hs ~/babylon | awk '{print $1}')
